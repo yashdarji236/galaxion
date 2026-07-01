@@ -8,21 +8,6 @@ import Reports from './pages/Reports';
 
 // Protected Route Wrapper Component
 const ProtectedRoute = ({ children }) => {
-  const { token, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="telemetry-loading-screen">
-        <span className="spinner-icon large"></span>
-        <p>Syncing security tokens...</p>
-      </div>
-    );
-  }
-
-  if (!token) {
-    return <Navigate to="/login" replace />;
-  }
-
   return children;
 };
 
@@ -31,8 +16,8 @@ export default function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          {/* Public Route */}
-          <Route path="/login" element={<Login />} />
+          {/* Public Route redirected to dashboard */}
+          <Route path="/login" element={<Navigate to="/dashboard" replace />} />
 
           {/* Protected Dashboard Core Routes */}
           <Route
