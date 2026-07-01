@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
+import { API_BASE_URL } from '../config';
 
 export default function Reports() {
   const [reports, setReports] = useState([]);
@@ -12,8 +13,8 @@ export default function Reports() {
     const fetchReportsAndCraters = async () => {
       try {
         const [reportsRes, cratersRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/reports'),
-          axios.get('http://localhost:5000/api/craters')
+          axios.get(`${API_BASE_URL}/api/reports`),
+          axios.get(`${API_BASE_URL}/api/craters`)
         ]);
         setReports(reportsRes.data);
         setCraters(cratersRes.data);

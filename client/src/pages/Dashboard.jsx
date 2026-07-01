@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
+import { API_BASE_URL } from '../config';
 import CraterMap from '../components/CraterMap';
 import RadarPanel from '../components/RadarPanel';
 import ElevationChart from '../components/ElevationChart';
@@ -56,7 +57,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchCraters = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/craters');
+        const response = await axios.get(`${API_BASE_URL}/api/craters`);
         setCraters(response.data);
         
         // Find default crater: Check if state passed a crater, else load Faustini
@@ -81,7 +82,7 @@ export default function Dashboard() {
 
     const fetchCraterDetail = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/craters/${selectedCraterId}`);
+        const response = await axios.get(`${API_BASE_URL}/api/craters/${selectedCraterId}`);
         const crater = response.data;
         setSelectedCrater(crater);
         
@@ -170,7 +171,7 @@ export default function Dashboard() {
     setIsLoading(true);
     setSaveStatus('');
     try {
-      const response = await axios.post('http://localhost:5000/api/analysis/run', {
+      const response = await axios.post(`${API_BASE_URL}/api/analysis/run`, {
         craterId: selectedCraterId,
         cpr_threshold: cpr,
         dop_threshold: dop,
@@ -191,7 +192,7 @@ export default function Dashboard() {
     if (!selectedCrater || !analysisData) return;
     setSaveStatus('Saving report to central log...');
     try {
-      await axios.post('http://localhost:5000/api/reports/save', {
+      await axios.post(`${API_BASE_URL}/api/reports/save`, {
         craterId: selectedCraterId,
         cpr_used: cpr,
         dop_used: dop,

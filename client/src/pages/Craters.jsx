@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
+import { API_BASE_URL } from '../config';
 
 export default function Craters() {
   const [craters, setCraters] = useState([]);
@@ -13,7 +14,7 @@ export default function Craters() {
   useEffect(() => {
     const fetchCraters = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/craters');
+        const response = await axios.get(`${API_BASE_URL}/api/craters`);
         setCraters(response.data);
       } catch (err) {
         console.error('Error fetching craters list:', err);
